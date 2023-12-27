@@ -1,0 +1,18 @@
+version: '3'
+services:
+  nest-app:
+    container_name: backend_nest  
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '${NEST_PORT}:${NEST_PORT}'
+    volumes:
+      - ./src:/app/src
+    environment:
+      - NODE_ENV=${NODE_ENV}
+    env_file:
+      - .env
+
+volumes:
+  nest-app-volume:   # nest 볼륨
