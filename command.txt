@@ -1,0 +1,3 @@
+migration create command
+
+npx typeorm-ts-node-esm migration:create ./src/migrations/CreateUserTable
