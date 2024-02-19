@@ -5,6 +5,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    depends_on:
+      - mysql-nest
     ports:
       - '${NEST_PORT}:${NEST_PORT}'
     volumes:
@@ -13,6 +15,22 @@ services:
       - NODE_ENV=${NODE_ENV}
     env_file:
       - .env
+    links:
+      - mysql-nest
+
+  mysql-nest:
+    container_name: ${MYSQL_NAME}
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${EXTERNAL_MYSQL_PORT}:${MYSQL_PORT}"
+    volumes:
+      - mysql-data:/var/lib/mysql
 
 volumes:
   nest-app-volume:   # nest 볼륨
+  mysql-data: # mysql 볼륨
