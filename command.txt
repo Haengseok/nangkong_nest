@@ -1,3 +1,6 @@
 migration create command
+docker exec backend_nest npx sequelize-cli migration:generate --migrations-path src/migrations --name 이름
 
-npx typeorm-ts-node-esm migration:create ./src/migrations/CreateUserTable
+마이그레이션
+docker exec backend_nest npm run migration
+docker exec backend_nest npm run rollback
