@@ -1,18 +1,30 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { TypeOrmModule } from '@nestjs/typeorm';
 // import { GraphQLModule } from '@nestjs/graphql';
-import { databaseConfig } from './config/database/database.config';
+import { UserController } from './modules/User/User.controller';
+import { SequelizeModule } from '@nestjs/sequelize';
+import config from './config/database/database.config';
+import { SequelizeConfigModule } from './config/database/sequelize.module';
+import { UserService } from './modules/User/User.service';
+import { User } from './modules/User/User.model';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(databaseConfig),
+    SequelizeModule.forRoot(config),
+    SequelizeModule.forFeature([User]),
+    // SequelizeConfigModule,
     // GraphQLModule.forRoot({
     //   autoSchemaFile: true,
     // }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [
+    AppController,
+    UserController,
+  ],
+  providers: [
+    AppService,
+    UserService,
+  ],
 })
 export class AppModule {}
