@@ -1,5 +1,5 @@
 import { SequelizeModule } from '@nestjs/sequelize';
-import { User } from '../../modules/User/User.model'; // 생성한 모델 import
+import { User } from '../../modules/user/user.model'; // 생성한 모델 import
 import { Module } from '@nestjs/common';
 
 @Module({

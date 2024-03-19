@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import { User } from './User.model';
+import { User } from './user.model';
 
 @Injectable()
 export class UserService {
   constructor(
     @InjectModel(User)
     private readonly userModel: typeof User, // 사용자 모델 주입
-  ) {}
+  ) { }
 
   async getAllUsers(): Promise<User[]> {
     try {
