@@ -27,6 +27,12 @@ export class User extends Model<User> {
   email: string;
 
   @Column({
+    unique: true,
+    allowNull: false,
+  })
+  phone_number: string;
+
+  @Column({
     allowNull: false,
   })
   password: string;

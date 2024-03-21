@@ -8,6 +8,7 @@ import config from './config/database/database.config';
 import { SequelizeConfigModule } from './config/database/sequelize.module';
 import { UserService } from './modules/user/user.service';
 import { User } from './modules/user/user.model';
+import { DtoService } from './modules/dto/dto.service';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { User } from './modules/user/user.model';
   providers: [
     AppService,
     UserService,
+    DtoService,
   ],
 })
 export class AppModule {}

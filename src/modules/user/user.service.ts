@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.model';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UniqueConstraintError } from 'sequelize';
 
 @Injectable()
 export class UserService {
@@ -17,6 +19,19 @@ export class UserService {
     } catch (error) {
       // 오류 처리
       throw new Error('Failed to fetch users');
+    }
+  }
+
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    try {
+      return await this.userModel.create(createUserDto);
+    } catch (error) {
+      // 고유 제약 조건 위반 오류 처리
+      if (error instanceof UniqueConstraintError) {
+        throw new HttpException('Name or email already exists.', HttpStatus.CONFLICT);
+      } else {
+        throw new Error('Unknown error occurred');
+      }
     }
   }
 }
