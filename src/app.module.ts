@@ -1,19 +1,12 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { UserModule } from './modules/user/user.module';
 // import { GraphQLModule } from '@nestjs/graphql';
-import { UserController } from './modules/user/user.controller';
-import { SequelizeModule } from '@nestjs/sequelize';
-import config from './config/database/database.config';
-import { SequelizeConfigModule } from './config/database/sequelize.module';
-import { UserService } from './modules/user/user.service';
-import { User } from './modules/user/user.model';
-import { DtoService } from './modules/dto/dto.service';
 
 @Module({
   imports: [
-    SequelizeModule.forRoot(config),
-    SequelizeModule.forFeature([User]),
+    UserModule,
     // SequelizeConfigModule,
     // GraphQLModule.forRoot({
     //   autoSchemaFile: true,
@@ -21,12 +14,9 @@ import { DtoService } from './modules/dto/dto.service';
   ],
   controllers: [
     AppController,
-    UserController,
   ],
   providers: [
     AppService,
-    UserService,
-    DtoService,
   ],
 })
-export class AppModule {}
+export class AppModule { }
