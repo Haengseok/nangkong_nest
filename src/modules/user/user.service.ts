@@ -22,6 +22,15 @@ export class UserService {
     }
   }
 
+  async findByEmail(email: string): Promise<User> {
+    const user = this.userModel.findOne({ where: { email: email } });
+    if (user !== null) {
+      return user;
+    } else {
+      throw new HttpException('Not found User!', HttpStatus.NOT_FOUND);
+    }
+  }
+
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
       return await this.userModel.create(createUserDto);

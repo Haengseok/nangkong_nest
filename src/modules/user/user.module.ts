@@ -16,5 +16,6 @@ import { DtoService } from '../dto/dto.service';
         UserService,
         DtoService,
     ],
+    exports: [UserService],
 })
 export class UserModule { }
