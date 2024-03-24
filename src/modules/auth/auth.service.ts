@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserDto } from './dto/login-user.dto';
+import { compare, hash } from 'bcrypt';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
 
   async validateUser(username: string, password: string): Promise<Object> {
     const user = await this.userService.findOne(username);
-    if (user.password === password) {
+    if (await this.comparePasswords(password, user.password)) {
       const result = {
         sub: user.id,
         username: user.user_name,
@@ -28,5 +29,10 @@ export class AuthService {
     } else {
       throw new HttpException('Incorrect password', HttpStatus.UNAUTHORIZED);
     }
+  }
+
+  // 비밀번호 check
+  async comparePasswords(password: string, hashedPassword: string): Promise<boolean> {
+    return await compare(password, hashedPassword);
   }
 }

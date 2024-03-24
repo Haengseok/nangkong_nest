@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/sequelize';
 import { User } from './user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UniqueConstraintError } from 'sequelize';
+import { hash } from 'bcrypt';
 
 @Injectable()
 export class UserService {
@@ -33,7 +34,12 @@ export class UserService {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     try {
-      return await this.userModel.create(createUserDto);
+      return await this.userModel.create({
+        user_name: createUserDto.user_name,
+        email: createUserDto.email,
+        password: await this.hashPassword(createUserDto.password),
+        phone_number: createUserDto.phone_number,
+      });
     } catch (error) {
       // 고유 제약 조건 위반 오류 처리
       if (error instanceof UniqueConstraintError) {
@@ -42,5 +48,12 @@ export class UserService {
         throw new Error('Unknown error occurred');
       }
     }
+  }
+
+  // 비밀번호 암호화 로직
+  async hashPassword(password: string): Promise<string> {
+    const saltRounds = 10;
+    const hashedPassword = await hash(password, saltRounds);
+    return hashedPassword;
   }
 }
