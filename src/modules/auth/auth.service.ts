@@ -2,18 +2,15 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserDto } from './dto/login-user.dto';
-import { DtoService } from '../dto/dto.service';
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
     private jwtService: JwtService,
-    private readonly dtoService: DtoService,
   ) { }
 
-  async login(LoginData: Object) {
-    const loginUserDto = await this.dtoService.transform(LoginUserDto, LoginData);
+  async login(loginUserDto: LoginUserDto) {
     const payload = await this.validateUser(loginUserDto.username, loginUserDto.password);
     return {
       access_token: this.jwtService.sign(payload),
