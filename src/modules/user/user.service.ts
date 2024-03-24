@@ -22,8 +22,8 @@ export class UserService {
     }
   }
 
-  async findByEmail(email: string): Promise<User> {
-    const user = this.userModel.findOne({ where: { email: email } });
+  async findOne(username: string): Promise<User> {
+    const user = this.userModel.findOne({ where: { user_name: username } });
     if (user !== null) {
       return user;
     } else {

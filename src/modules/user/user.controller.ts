@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { User } from './user.model';
 import { UserService } from './user.service';
 import { DtoService } from '../dto/dto.service';
 import { CreateUserDto } from './dto/create-user.dto';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @Controller('users')
 export class UserController {
@@ -12,6 +13,7 @@ export class UserController {
   ) { }
 
   @Get('all')
+  @UseGuards(JwtAuthGuard)
   async findAllUsers(): Promise<User[]> {
     return await this.userService.getAllUsers(); // UserService를 사용하여 모든 사용자 검색
   }
