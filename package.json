@@ -22,9 +22,11 @@
     "rollback": "ts-node src/commands/migration.ts -- --rollback"
   },
   "dependencies": {
+    "@apollo/server": "^4.10.2",
+    "@nestjs/apollo": "^12.1.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/core": "^10.0.0",
-    "@nestjs/graphql": "^12.0.11",
+    "@nestjs/graphql": "^12.1.1",
     "@nestjs/jwt": "^10.2.0",
     "@nestjs/passport": "^10.0.3",
     "@nestjs/platform-express": "^10.0.0",

@@ -5,6 +5,7 @@ import { SequelizeModule } from '@nestjs/sequelize';
 import config from 'src/config/database/database.config';
 import { User } from './user.model';
 import { DtoService } from '../dto/dto.service';
+import { UserResolver } from './user.resolver';
 
 @Module({
     imports: [
@@ -15,7 +16,10 @@ import { DtoService } from '../dto/dto.service';
     providers: [
         UserService,
         DtoService,
+        UserResolver,
     ],
-    exports: [UserService],
+    exports: [
+        UserService,
+    ],
 })
 export class UserModule { }
