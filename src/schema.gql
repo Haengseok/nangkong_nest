@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 
 type UserType {
-  id: ID!
+  id: ID
   user_name: String!
   email: String!
   phone_number: String
@@ -20,4 +20,15 @@ scalar DateTime
 
 type Query {
   users: [UserType!]!
+}
+
+type Mutation {
+  createUser(input: CreateUser!): UserType!
+}
+
+input CreateUser {
+  user_name: String!
+  email: String!
+  phone_number: String!
+  password: String!
 }

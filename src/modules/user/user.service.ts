@@ -4,6 +4,7 @@ import { User } from './user.model';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UniqueConstraintError } from 'sequelize';
 import { hash } from 'bcrypt';
+import { CreateUser } from './graphql/create-user.type';
 
 @Injectable()
 export class UserService {
@@ -32,13 +33,14 @@ export class UserService {
     }
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  // async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(CreateUser: CreateUser): Promise<User> {
     try {
       return await this.userModel.create({
-        user_name: createUserDto.user_name,
-        email: createUserDto.email,
-        password: await this.hashPassword(createUserDto.password),
-        phone_number: createUserDto.phone_number,
+        user_name: CreateUser.user_name,
+        email: CreateUser.email,
+        password: await this.hashPassword(CreateUser.password),
+        phone_number: CreateUser.phone_number,
       });
     } catch (error) {
       // 고유 제약 조건 위반 오류 처리

@@ -3,7 +3,7 @@ import { Field, ID, ObjectType } from "@nestjs/graphql";
 // GraphQL 스키마에 사용될 유저 타입을 정의합니다.
 @ObjectType()
 export class UserType {
-    @Field(() => ID)
+    @Field(() => ID, { nullable: true })
     id: number; // 유저 아이디
 
     @Field()
