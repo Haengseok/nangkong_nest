@@ -13,7 +13,7 @@ export class UserController {
   ) { }
 
   @Get('all')
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard) // TODO: 추후 관리자 인증 붙일 때 변경필요
   async findAllUsers(): Promise<User[]> {
     return await this.userService.getAllUsers(); // UserService를 사용하여 모든 사용자 검색
   }
