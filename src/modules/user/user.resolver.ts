@@ -3,6 +3,8 @@ import { UserType } from './graphql/user.type';
 import { UserService } from './user.service';
 import { DtoService } from '../dto/dto.service';
 import { CreateUser } from './graphql/create-user.type';
+import { GqlAuthGuard } from '../auth/gql-auth.guard';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => UserType)
 export class UserResolver {
@@ -13,6 +15,7 @@ export class UserResolver {
 
     // 전체 user 조회
     @Query(() => [UserType])
+    @UseGuards(GqlAuthGuard)
     async users(): Promise<UserType[]> {
         return this.userService.getAllUsers();
     }
