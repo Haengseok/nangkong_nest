@@ -1,9 +1,7 @@
-import { Sequelize } from 'sequelize';
+import { SequelizeModuleOptions } from '@nestjs/sequelize';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-// sequelize.config.ts
-import { SequelizeModuleOptions } from '@nestjs/sequelize';
 
 const config: SequelizeModuleOptions = {
   dialect: 'mysql',
@@ -17,16 +15,3 @@ const config: SequelizeModuleOptions = {
 };
 
 export default config;
-
-// const sequelize = new Sequelize(
-//   (process.env.DB_DATABASE || 'mydatabase'),
-//   (process.env.DB_USERNAME || 'root'),
-//   (process.env.DB_PASSWORD || ''),
-//   {
-//     host: (process.env.DB_HOST || 'localhost'),
-//     port: parseInt(process.env.DB_PASSWORD || '3306'),
-//     dialect: 'mysql',
-//     timezone: 'Asia/Seoul', // 서울 시간대로 설정
-//   });
-
-// export default sequelize;

@@ -1,8 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
-import { LoginUserDto } from './dto/login-user.dto';
 import { compare, hash } from 'bcrypt';
+import { LoginType } from './graphql/login.type';
+import { AuthPayload } from './graphql/authPayload.type';
 
 @Injectable()
 export class AuthService {
@@ -11,11 +12,17 @@ export class AuthService {
     private jwtService: JwtService,
   ) { }
 
-  async login(loginUserDto: LoginUserDto) {
-    const payload = await this.validateUser(loginUserDto.username, loginUserDto.password);
-    return {
+  async login(loginData: LoginType): Promise<AuthPayload> {
+    const payload = await this.validateUser(
+      loginData.user_name,
+      loginData.password,
+    );
+
+    const authPayload: AuthPayload = {
       access_token: this.jwtService.sign(payload),
     };
+
+    return authPayload;
   }
 
   async validateUser(username: string, password: string): Promise<Object> {

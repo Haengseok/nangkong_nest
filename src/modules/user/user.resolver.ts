@@ -1,7 +1,6 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { UserType } from './graphql/user.type';
 import { UserService } from './user.service';
-import { DtoService } from '../dto/dto.service';
 import { CreateUser } from './graphql/create-user.type';
 import { GqlAuthGuard } from '../auth/gql-auth.guard';
 import { UseGuards } from '@nestjs/common';
@@ -10,7 +9,6 @@ import { UseGuards } from '@nestjs/common';
 export class UserResolver {
     constructor(
         private readonly userService: UserService,
-        private readonly dtoService: DtoService,
     ) { }
 
     // 전체 user 조회

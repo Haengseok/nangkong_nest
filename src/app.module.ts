@@ -6,12 +6,14 @@ import { AuthModule } from './modules/auth/auth.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import * as dotenv from 'dotenv';
+dotenv.config();
 
 @Module({
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      playground: true, // TODO: 실서버에서는 false
+      playground: (process.env.DB_USERNAME !== 'production'),
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
 

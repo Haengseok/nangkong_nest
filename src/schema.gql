@@ -18,17 +18,27 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type AuthPayload {
+  access_token: String!
+}
+
 type Query {
   users: [UserType!]!
 }
 
 type Mutation {
   createUser(input: CreateUser!): UserType!
+  login(input: LoginType!): AuthPayload!
 }
 
 input CreateUser {
   user_name: String!
   email: String!
   phone_number: String!
+  password: String!
+}
+
+input LoginType {
+  user_name: String!
   password: String!
 }

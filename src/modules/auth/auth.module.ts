@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { DtoService } from '../dto/dto.service';
 import { JwtStrategy } from './jwt.strategy';
 import * as dotenv from 'dotenv';
+import { AuthResolver } from './auth.resolver';
 dotenv.config();
 
 @Module({
@@ -23,6 +24,7 @@ dotenv.config();
         AuthService,
         DtoService,
         JwtStrategy, // 토큰check 로직
+        AuthResolver,
     ],
 })
 export class AuthModule { }

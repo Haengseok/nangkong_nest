@@ -10,9 +10,9 @@ export class AuthController {
     private readonly dtoService: DtoService,
   ) { }
 
-  @Post('login')
-  async login(@Body() LoginData: Object) {
-    const loginUserDto: LoginUserDto = await this.dtoService.transform(LoginUserDto, LoginData);
-    return this.authService.login(loginUserDto);
-  }
+  // @Post('login')
+  // async login(@Body() LoginData: Object) {
+  //   const loginUserDto: LoginUserDto = await this.dtoService.transform(LoginUserDto, LoginData);
+  //   return this.authService.login(loginUserDto);
+  // }
 }
