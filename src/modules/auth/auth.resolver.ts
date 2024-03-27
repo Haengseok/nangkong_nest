@@ -9,7 +9,7 @@ export class AuthResolver {
         private readonly authService: AuthService,
     ) { }
 
-    @Mutation((returns) => AuthPayload)
+    @Mutation(() => AuthPayload)
     async login(@Args('input') loginData: LoginType): Promise<AuthPayload> {
         const createdUser = await this.authService.login(loginData);
         return createdUser; // 생성된 유저를 반환합니다.
