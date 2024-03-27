@@ -1,6 +1,10 @@
 migration create command
 docker exec backend_nest npx sequelize-cli migration:generate --migrations-path src/migrations --name 이름
 
+docker exec backend_nest npx sequelize-cli migration:generate --migrations-path src/migrations --name create_clients_table
+docker exec backend_nest npx sequelize-cli migration:generate --migrations-path src/migrations --name create_access_token_table
+docker exec backend_nest npx sequelize-cli migration:generate --migrations-path src/migrations --name create_refresh_token_table
+
 마이그레이션
 docker exec backend_nest npm run migration
 docker exec backend_nest npm run rollback

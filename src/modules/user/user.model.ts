@@ -8,7 +8,10 @@ import {
   DeletedAt,
 } from 'sequelize-typescript';
 
-@Table({ tableName: 'users' })
+@Table({
+  tableName: 'users',
+  underscored: true,
+})
 export class User extends Model<User> {
   @PrimaryKey
   @Column
