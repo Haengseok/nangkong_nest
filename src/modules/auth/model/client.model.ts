@@ -6,11 +6,8 @@ import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt } from 'sequeliz
 })
 export class Client extends Model<Client> {
     @PrimaryKey
-    @Column
+    @Column({autoIncrement: true})
     id: number;
-
-    @Column
-    user_id: number;
 
     @Column
     name: string;
@@ -23,6 +20,12 @@ export class Client extends Model<Client> {
         defaultValue: false,
     })
     password_client: boolean;
+
+    @Column({
+        allowNull: false,
+        defaultValue: false,
+    })
+    revoked: boolean;
 
     @CreatedAt
     created_at: Date;

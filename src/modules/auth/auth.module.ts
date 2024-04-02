@@ -8,10 +8,22 @@ import { DtoService } from '../dto/dto.service';
 import { JwtStrategy } from './jwt.strategy';
 import * as dotenv from 'dotenv';
 import { AuthResolver } from './auth.resolver';
+import { SequelizeModule } from '@nestjs/sequelize';
+import config from 'src/config/database/database.config';
+import { Client } from './model/client.model';
+import { AccessToken } from './model/access-token.model';
+import { RefreshToken } from './model/refresh-token.model';
 dotenv.config();
 
 @Module({
     imports: [
+        SequelizeModule.forRoot(config),
+        SequelizeModule.forFeature([
+            Client,
+            AccessToken,
+            RefreshToken,
+        ]),
+        
         UserModule,
         PassportModule,
         JwtModule.register({

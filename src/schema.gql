@@ -20,6 +20,7 @@ scalar DateTime
 
 type AuthPayload {
   access_token: String!
+  refresh_token: String!
 }
 
 type Query {

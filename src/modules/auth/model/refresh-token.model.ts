@@ -7,7 +7,7 @@ import { AccessToken } from './access-token.model';
 })
 export class RefreshToken extends Model<RefreshToken> {
     @PrimaryKey
-    @Column
+    @Column({autoIncrement: true})
     id: number;
 
     @ForeignKey(() => AccessToken)

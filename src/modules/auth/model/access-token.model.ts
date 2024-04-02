@@ -1,4 +1,5 @@
-import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt } from 'sequelize-typescript';
+import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt, HasOne } from 'sequelize-typescript';
+import { RefreshToken } from './refresh-token.model';
 
 @Table({
     tableName: 'oauth_access_tokens',
@@ -6,7 +7,7 @@ import { Table, Column, Model, PrimaryKey, CreatedAt, UpdatedAt } from 'sequeliz
 })
 export class AccessToken extends Model<AccessToken> {
     @PrimaryKey
-    @Column
+    @Column({ autoIncrement: true })
     id: number;
 
     @Column
@@ -26,6 +27,9 @@ export class AccessToken extends Model<AccessToken> {
         defaultValue: false,
     })
     revoked: boolean;
+
+    @HasOne(() => RefreshToken)
+    refresh_token: RefreshToken;
 
     @CreatedAt
     created_at: Date;
