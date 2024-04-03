@@ -20,6 +20,12 @@ export class RefreshToken extends Model<RefreshToken> {
     @Column
     refresh_token: string;
 
+    @Column({
+        allowNull: false,
+        defaultValue: false,
+    })
+    revoked: boolean;
+
     @CreatedAt
     createdAt: Date;
 

@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
@@ -77,23 +77,28 @@ export class AuthService {
 
   // accessToken 생성
   private async generateAccessToken(payload: any) {
+    // accessToken 유효성 검사위한 키
+    const secretKey = moment().format('YYYYMMDDHHmmss') + crypto.randomBytes(10).toString('hex');
+    payload['secret'] = secretKey;
+
     const accessToken = this.jwtService.sign(payload);
 
-    // TODO: 이전토큰 만료시키는 로직 필요
-    
+    // 이전에 발급된 토큰 가져와서 만료시키기
+    this.revokeToken(payload.client_id, payload.sub);
+
     // accessToken 생성
     const accessTokenModel = await this.accessTokenModel.create({
       client_id: payload.client_id,
       user_id: payload.sub,
-      access_token: accessToken,
+      secret: secretKey,
       scopes: '*',
-    })
+    });
 
     // refreshToken 생성
     const refreshTokenModel = await this.refreshTokenModel.create({
       access_token_id: accessTokenModel.id,
       refresh_token: moment().format('YYYYMMDDHHmmss') + crypto.randomBytes(32).toString('hex'),
-    })
+    });
 
     const authPayload: AuthPayload = {
       access_token: accessToken,
@@ -101,5 +106,50 @@ export class AuthService {
     };
 
     return authPayload;
+  }
+
+  private async revokeToken(clientId: number, userId: number) {
+    // 이전에 발급된 가져오기
+    const beforeAccessToken = await this.accessTokenModel.findOne({
+      where: {
+        client_id: clientId,
+        user_id: userId,
+        revoked: false,
+      },
+      include: [RefreshToken],
+    });
+
+    // 있으면 만료
+    if (beforeAccessToken) {
+      // accessToken 만료
+      beforeAccessToken.revoked = true;
+      beforeAccessToken.save();
+
+      // refreshToekn 만료
+      beforeAccessToken.refresh_token.revoked = true;
+      beforeAccessToken.refresh_token.save();
+    }
+  }
+
+  // 외부에서 들어오는 token check
+  public async apiTokenCheck(payload: any): Promise<boolean> {
+    console.log(payload);
+    const accessToken = await this.accessTokenModel.findOne({
+      where: {
+        user_id: payload.sub,
+        client_id: payload.client_id,
+        secret: payload.secret,
+      }
+    });
+
+    if (!accessToken) {
+      throw new UnauthorizedException('Unauthorized');
+    }
+
+    if (accessToken.revoked) {
+      throw new UnauthorizedException('Access Token is Expired');
+    }
+
+    return true;
   }
 }

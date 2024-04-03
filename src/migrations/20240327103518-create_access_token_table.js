@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      access_token: {
+      secret: {
         type: Sequelize.STRING,
         allowNull: false,
       },

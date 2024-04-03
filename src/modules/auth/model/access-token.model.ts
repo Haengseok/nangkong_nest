@@ -17,7 +17,7 @@ export class AccessToken extends Model<AccessToken> {
     client_id: number;
 
     @Column
-    access_token: string;
+    secret: string;
 
     @Column
     scopes: string;
