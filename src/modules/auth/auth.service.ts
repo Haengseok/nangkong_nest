@@ -10,6 +10,7 @@ import * as crypto from 'crypto';
 import { InjectModel } from '@nestjs/sequelize';
 import { AccessToken } from './model/access-token.model';
 import { RefreshToken } from './model/refresh-token.model';
+import { RefreshLoginType } from './graphql/refresh-login.type';
 
 
 @Injectable()
@@ -36,6 +37,28 @@ export class AuthService {
 
     // client 추가
     payload['client_id'] = await this.masterClientFindOrCreate('Master Client');
+
+    return await this.generateAccessToken(payload);
+  }
+
+  async refreshLogin(refreshLoginData: RefreshLoginType): Promise<AuthPayload> {
+    const refreshToken = await this.refreshTokenModel.findOne({
+      where: { refresh_token: refreshLoginData.refresh_token },
+      include: [AccessToken],
+    });
+
+    if (!refreshToken) {
+      throw new UnauthorizedException('Unauthorized');
+    }
+
+    if (refreshToken.revoked) {
+      throw new UnauthorizedException('Refresh Token is Expired');
+    }
+
+    const payload = {
+      sub: refreshToken.access_token.user_id,
+      client_id: refreshToken.access_token.client_id,
+    }
 
     return await this.generateAccessToken(payload);
   }

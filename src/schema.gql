@@ -30,6 +30,7 @@ type Query {
 type Mutation {
   createUser(input: CreateUser!): UserType!
   login(input: LoginType!): AuthPayload!
+  refreshLogin(input: RefreshLoginType!): AuthPayload!
 }
 
 input CreateUser {
@@ -42,4 +43,8 @@ input CreateUser {
 input LoginType {
   user_name: String!
   password: String!
+}
+
+input RefreshLoginType {
+  refresh_token: String!
 }
