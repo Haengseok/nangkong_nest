@@ -31,4 +31,7 @@ export class RefreshToken extends Model<RefreshToken> {
 
     @UpdatedAt
     updatedAt: Date;
+
+    @Column({allowNull: false})
+    expired_at: Date;
 }

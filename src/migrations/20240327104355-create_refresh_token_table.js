@@ -36,6 +36,10 @@ module.exports = {
       updated_at: {
         allowNull: false,
         type: Sequelize.DATE
+      },
+      expired_at: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
     });
   },

@@ -98,6 +98,7 @@ export class AuthService {
     const refreshTokenModel = await this.refreshTokenModel.create({
       access_token_id: accessTokenModel.id,
       refresh_token: moment().format('YYYYMMDDHHmmss') + crypto.randomBytes(32).toString('hex'),
+      expired_at: moment().add(2, 'weeks').toDate(), // 2주
     });
 
     const authPayload: AuthPayload = {
@@ -133,7 +134,6 @@ export class AuthService {
 
   // 외부에서 들어오는 token check
   public async apiTokenCheck(payload: any): Promise<boolean> {
-    console.log(payload);
     const accessToken = await this.accessTokenModel.findOne({
       where: {
         user_id: payload.sub,
