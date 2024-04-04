@@ -10,12 +10,14 @@ export class AuthResolver {
         private readonly authService: AuthService,
     ) { }
 
+    // 일반 로그인
     @Mutation(() => AuthPayload)
     async login(@Args('input') loginData: LoginType): Promise<AuthPayload> {
         const authPayload = await this.authService.login(loginData);
         return authPayload; // 생성된 Token을 반환합니다.
     }
 
+    // Refresh 로그인
     @Mutation(() => AuthPayload)
     async refreshLogin(@Args('input') refreshLoginData: RefreshLoginType): Promise<AuthPayload> {
         const authPayload = await this.authService.refreshLogin(refreshLoginData);
