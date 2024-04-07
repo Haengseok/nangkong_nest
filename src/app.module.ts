@@ -7,6 +7,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import * as dotenv from 'dotenv';
+import { TablingModule } from './Tabling/tabling.module';
 dotenv.config();
 
 @Module({
@@ -19,6 +20,7 @@ dotenv.config();
 
     UserModule,
     AuthModule,
+    TablingModule,
   ],
   controllers: [
     AppController,
