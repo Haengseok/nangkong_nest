@@ -23,4 +23,11 @@ export class AuthResolver {
         const authPayload = await this.authService.refreshLogin(refreshLoginData);
         return authPayload;
     }
+
+    // tabling 로그인
+    @Mutation(() => AuthPayload)
+    async tablingLogin(@Args('input') loginData: LoginType): Promise<AuthPayload> {
+        const authPayload = await this.authService.tablingLogin(loginData);
+        return authPayload; // 생성된 Token을 반환합니다.
+    }
 }

@@ -11,12 +11,14 @@ import { InjectModel } from '@nestjs/sequelize';
 import { AccessToken } from './model/access-token.model';
 import { RefreshToken } from './model/refresh-token.model';
 import { RefreshLoginType } from './graphql/refresh-login.type';
+import { TablingUserService } from 'src/Tabling/TablingUser/tabling-user.service';
 
 
 @Injectable()
 export class AuthService {
   constructor(
     private readonly userService: UserService,
+    private readonly tablingUserService: TablingUserService,
     private jwtService: JwtService,
 
     @InjectModel(Client)
@@ -29,8 +31,10 @@ export class AuthService {
     private refreshTokenModel: typeof RefreshToken,
   ) { }
 
+  // 일반 master 로그인
   async login(loginData: LoginType): Promise<AuthPayload> {
     var payload = await this.validateUser(
+      'master',
       loginData.user_name,
       loginData.password,
     );
@@ -40,6 +44,21 @@ export class AuthService {
 
     return await this.generateAccessToken(payload);
   }
+
+  // tabling 로그인
+  async tablingLogin(loginData: LoginType): Promise<AuthPayload> {
+    var payload = await this.validateUser(
+      'tabling',
+      loginData.user_name,
+      loginData.password,
+    );
+
+    // client 추가
+    payload['client_id'] = await this.masterClientFindOrCreate('Tabling Client');
+
+    return await this.generateAccessToken(payload);
+  }
+
 
   async refreshLogin(refreshLoginData: RefreshLoginType): Promise<AuthPayload> {
     const refreshToken = await this.refreshTokenModel.findOne({
@@ -63,8 +82,18 @@ export class AuthService {
     return await this.generateAccessToken(payload);
   }
 
-  async validateUser(username: string, password: string): Promise<Object> {
-    const user = await this.userService.findOne(username);
+  async validateUser(
+    project: string,
+    username: string,
+    password: string
+  ): Promise<Object> {
+    // 어느 프로젝트의 모델인지 정해지지 않아서 any 선언
+    var user: any;
+    if (project === 'master') {
+      user = await this.userService.findOne(username);
+    } else if (project === 'tabling') {
+      user = await this.tablingUserService.findOne(username);
+    }
     if (await this.comparePasswords(password, user.password)) {
       const result = {
         sub: user.id,

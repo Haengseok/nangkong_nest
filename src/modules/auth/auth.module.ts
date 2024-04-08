@@ -13,6 +13,7 @@ import config from 'src/config/database/database.config';
 import { Client } from './model/client.model';
 import { AccessToken } from './model/access-token.model';
 import { RefreshToken } from './model/refresh-token.model';
+import { TablingUserModule } from 'src/Tabling/TablingUser/tabling-user.module';
 dotenv.config();
 
 @Module({
@@ -24,6 +25,7 @@ dotenv.config();
             RefreshToken,
         ]),
         
+        TablingUserModule,
         UserModule,
         PassportModule,
         JwtModule.register({

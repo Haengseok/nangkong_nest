@@ -42,6 +42,7 @@ type Mutation {
   createUser(input: CreateUser!): UserType!
   login(input: LoginType!): AuthPayload!
   refreshLogin(input: RefreshLoginType!): AuthPayload!
+  tablingLogin(input: LoginType!): AuthPayload!
   tablingCreateUser(input: TablingCreateUser!): TablingUserType!
 }
 

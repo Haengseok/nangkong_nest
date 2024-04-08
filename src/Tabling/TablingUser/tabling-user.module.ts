@@ -15,7 +15,7 @@ import { TablingUserResolver } from './tabling-user.resolver';
         TablingUserResolver,
     ],
     exports: [
-        // UserService,
+        TablingUserService
     ],
 })
 export class TablingUserModule { }
