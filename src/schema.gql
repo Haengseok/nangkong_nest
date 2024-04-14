@@ -34,8 +34,20 @@ type TablingUserType {
   deleted_at: DateTime
 }
 
+type TablingShopType {
+  id: ID
+  shop_name: String!
+  address: String!
+  detail_address: String
+  phone_number: String
+  created_at: DateTime!
+  updated_at: DateTime!
+  deleted_at: DateTime
+}
+
 type Query {
   users: [UserType!]!
+  tablingShopFindName(shop_name: String!): TablingShopType!
 }
 
 type Mutation {
@@ -44,6 +56,7 @@ type Mutation {
   refreshLogin(input: RefreshLoginType!): AuthPayload!
   tablingLogin(input: LoginType!): AuthPayload!
   tablingCreateUser(input: TablingCreateUser!): TablingUserType!
+  tablingCreateShop(input: TablingCreateShop!): TablingShopType!
 }
 
 input CreateUser {
@@ -67,4 +80,11 @@ input TablingCreateUser {
   email: String!
   phone_number: String!
   password: String!
+}
+
+input TablingCreateShop {
+  shop_name: String!
+  address: String!
+  detail_address: String!
+  phone_number: String!
 }
