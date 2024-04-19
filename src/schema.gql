@@ -34,12 +34,20 @@ type TablingUserType {
   deleted_at: DateTime
 }
 
+type TablingShopOpenCloseType {
+  id: ID
+  shop_id: Float!
+  open_time: DateTime!
+  close_time: DateTime
+}
+
 type TablingShopType {
   id: ID
   shop_name: String!
   address: String!
   detail_address: String
   phone_number: String
+  open_close: [TablingShopOpenCloseType!]
   created_at: DateTime!
   updated_at: DateTime!
   deleted_at: DateTime

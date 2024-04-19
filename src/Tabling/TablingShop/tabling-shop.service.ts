@@ -1,8 +1,9 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { UniqueConstraintError } from 'sequelize';
-import { TablingShop } from './tabling-shop.model';
+import { TablingShop } from './model/tabling-shop.model';
 import { TablingCreateShop } from './graphql/tabling-create-shop.type';
+import { TablingShopOpenClose } from './model/tabling-shop-open-close.module';
 
 @Injectable()
 export class TablingShopService {
@@ -12,7 +13,10 @@ export class TablingShopService {
     ) { }
 
     async findOne(shopName: string): Promise<TablingShop> {
-        const shop = await this.shopModel.findOne({ where: { shop_name: shopName } });
+        const shop = await this.shopModel.findOne({
+            where: { shop_name: shopName },
+            include: [TablingShopOpenClose],
+        });
         if (shop) {
             return shop;
         } else {

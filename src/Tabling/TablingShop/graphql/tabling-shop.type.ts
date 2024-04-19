@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType } from "@nestjs/graphql";
+import { TablingShopOpenCloseType } from "./tabling-shop-open-close.type";
 
 // GraphQL 스키마에 사용될 유저 타입을 정의합니다.
 @ObjectType()
@@ -17,6 +18,9 @@ export class TablingShopType {
 
     @Field({ nullable: true })
     phone_number: string; // 전화번호
+
+    @Field(() => [TablingShopOpenCloseType], { nullable: true })
+    open_close: TablingShopOpenCloseType;
 
     @Field()
     created_at: Date; // 생성일

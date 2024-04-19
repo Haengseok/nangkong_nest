@@ -6,7 +6,9 @@ import {
     CreatedAt,
     UpdatedAt,
     DeletedAt,
+    HasMany,
 } from 'sequelize-typescript';
+import { TablingShopOpenClose } from './tabling-shop-open-close.module';
 
 @Table({
     tableName: 'tabling_shop',
@@ -32,6 +34,9 @@ export class TablingShop extends Model<TablingShop> {
         allowNull: false,
     })
     detail_address: string;
+
+    @HasMany(() => TablingShopOpenClose)
+    open_close: TablingShopOpenClose;
 
     @Column
     phone_number: string;

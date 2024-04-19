@@ -5,6 +5,8 @@ docker exec backend_nest npx sequelize-cli migration:generate --migrations-path 
 docker exec backend_nest npx sequelize-cli migration:generate --migrations-path src/migrations --name create_access_token_table
 docker exec backend_nest npx sequelize-cli migration:generate --migrations-path src/migrations --name create_refresh_token_table
 docker exec backend_nest npx sequelize-cli migration:generate --migrations-path src/migrations --name create_tabling_users_table
+docker exec backend_nest npx sequelize-cli migration:generate --migrations-path src/migrations --name create_tabling_shop_table
+docker exec backend_nest npx sequelize-cli migration:generate --migrations-path src/migrations --name create_tabling_shop_open_close_table
 
 마이그레이션
 docker exec backend_nest npm run migration
