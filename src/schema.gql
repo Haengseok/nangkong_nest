@@ -53,6 +53,10 @@ type TablingShopType {
   deleted_at: DateTime
 }
 
+type ReturnMessageType {
+  message: String!
+}
+
 type Query {
   users: [UserType!]!
   tablingShopFindName(shop_name: String!): TablingShopType!
@@ -65,6 +69,7 @@ type Mutation {
   tablingLogin(input: LoginType!): AuthPayload!
   tablingCreateUser(input: TablingCreateUser!): TablingUserType!
   tablingCreateShop(input: TablingCreateShop!): TablingShopType!
+  tablingShopOpenOrClose(input: TablingShopOpenOrCloseType!): ReturnMessageType!
 }
 
 input CreateUser {
@@ -95,4 +100,14 @@ input TablingCreateShop {
   address: String!
   detail_address: String!
   phone_number: String!
+}
+
+input TablingShopOpenOrCloseType {
+  status: ShopStatus!
+  shop_id: Float!
+}
+
+enum ShopStatus {
+  OPEN
+  CLOSE
 }

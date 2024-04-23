@@ -5,6 +5,7 @@ import {
     Table,
     BelongsTo,
     ForeignKey,
+    DataType,
 } from 'sequelize-typescript';
 import { TablingShop } from './tabling-shop.model';
 
@@ -27,9 +28,13 @@ export class TablingShopOpenClose extends Model<TablingShopOpenClose> {
     @BelongsTo(() => TablingShop)
     shop: TablingShop;
 
-    @Column
+    @Column({
+        type: DataType.DATE
+    })
     open_time: Date;
 
-    @Column
+    @Column({
+        type: DataType.DATE
+    })
     close_time: Date;
 }
