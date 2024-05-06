@@ -18,8 +18,8 @@ import { TablingShopOpenClose } from './model/tabling-shop-open-close.module';
         TablingShopService,
         TablingShopResolver,
     ],
-    // exports: [
-    //     TablingUserService
-    // ],
+    exports: [
+        TablingShopService,
+    ],
 })
 export class TablingShopModule { }

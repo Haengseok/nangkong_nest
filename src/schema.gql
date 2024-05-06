@@ -57,9 +57,32 @@ type ReturnMessageType {
   message: String!
 }
 
+type TablingListType {
+  id: ID!
+  shop_id: Float!
+  phone_number: String
+  tabling_type: String!
+  personnel: Float!
+  created_at: DateTime!
+  updated_at: DateTime
+  deleted_at: DateTime
+}
+
 type Query {
   users: [UserType!]!
   tablingShopFindName(shop_name: String!): TablingShopType!
+  watingList(input: TablingListInputType!): [TablingListType!]!
+}
+
+input TablingListInputType {
+  id: ID
+  shop_id: Float
+  phone_number: String
+  tabling_type: String
+  personnel: Float
+  created_at: DateTime
+  updated_at: DateTime
+  deleted_at: DateTime
 }
 
 type Mutation {
@@ -70,6 +93,7 @@ type Mutation {
   tablingCreateUser(input: TablingCreateUser!): TablingUserType!
   tablingCreateShop(input: TablingCreateShop!): TablingShopType!
   tablingShopOpenOrClose(input: TablingShopOpenOrCloseType!): ReturnMessageType!
+  tablingCreateList(input: TablingCreateListType!): TablingListType!
 }
 
 input CreateUser {
@@ -110,4 +134,11 @@ input TablingShopOpenOrCloseType {
 enum ShopStatus {
   OPEN
   CLOSE
+}
+
+input TablingCreateListType {
+  shop_id: Float!
+  phone_number: String!
+  tabling_type: String!
+  personnel: Float!
 }
