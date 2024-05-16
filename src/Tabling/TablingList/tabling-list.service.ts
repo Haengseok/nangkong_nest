@@ -7,6 +7,7 @@ import { TablingCreateListType } from './graphql/create-list.type';
 import { TablingListInputType } from './graphql/list-input.type';
 import { UniqueConstraintError, WhereOptions } from 'sequelize';
 import { TablingShopService } from '../TablingShop/tabling-shop.service';
+import { buildWhereClause } from 'src/common/filter-builder';
 
 @Injectable()
 export class TablingListService {
@@ -18,9 +19,14 @@ export class TablingListService {
     ) { }
 
     async getWaitList(condition: TablingListInputType): Promise<TablingList[]> {
+        // 쿼리 빌더 호출
+        const whereData = await buildWhereClause(condition.filters);
+        delete condition.filters;
+
         const list = await this.listModel.findAll({
             where: {
-                ...condition
+                ...condition,
+                ...whereData,
             },
         });
 

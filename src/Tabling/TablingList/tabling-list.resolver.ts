@@ -13,14 +13,14 @@ export class TablingListResolver {
     constructor(
         private service: TablingListService,
     ) { }
-    
+
     @Query(() => [TablingListType])
     async watingList(@Args('input') condition: TablingListInputType): Promise<TablingListType[]> {
         return await this.service.getWaitList(condition);
     }
 
     @Mutation(() => TablingListType)
-    async tablingCreateList(@Args('input') createData: TablingCreateListType): Promise<TablingListInputType> {
+    async tablingCreateList(@Args('input') createData: TablingCreateListType): Promise<TablingListType> {
         const createdShop = await this.service.create(createData);
         return createdShop; // 생성된 유저를 반환합니다.
     }

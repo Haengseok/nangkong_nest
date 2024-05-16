@@ -83,6 +83,13 @@ input TablingListInputType {
   created_at: DateTime
   updated_at: DateTime
   deleted_at: DateTime
+  filters: [FilterInput!]
+}
+
+input FilterInput {
+  field: String!
+  operator: String!
+  value: String!
 }
 
 type Mutation {

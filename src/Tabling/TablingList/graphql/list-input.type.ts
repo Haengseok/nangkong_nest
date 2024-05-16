@@ -1,5 +1,6 @@
 import { Field, ID, InputType } from "@nestjs/graphql";
 import { ListStatus } from "./list-status.enum";
+import { FilterInput } from "src/common/graphql/filter-type";
 
 @InputType()
 export class TablingListInputType {
@@ -26,4 +27,7 @@ export class TablingListInputType {
 
     @Field({ nullable: true })
     deleted_at: Date; // 삭제일
+
+    @Field(() => [FilterInput], { nullable: true })
+    filters: FilterInput[];
 }
