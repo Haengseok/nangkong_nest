@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
 import { TablingList } from './model/tabling-list.model';
 import { TablingCreateListType } from './graphql/create-list.type';
