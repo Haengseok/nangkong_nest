@@ -1,13 +1,11 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/sequelize';
-import * as moment from 'moment';
-import { ReturnMessageType } from 'src/graphql/return-message.type';
 import { TablingList } from './model/tabling-list.model';
 import { TablingCreateListType } from './graphql/create-list.type';
 import { TablingListInputType } from './graphql/list-input.type';
-import { UniqueConstraintError, WhereOptions } from 'sequelize';
 import { TablingShopService } from '../TablingShop/tabling-shop.service';
 import { buildWhereClause } from 'src/common/filter-builder';
+import { TablingSetStatusType } from './graphql/set-status.type';
 
 @Injectable()
 export class TablingListService {
@@ -49,6 +47,23 @@ export class TablingListService {
       });
     } catch (error) {
       throw new Error('Failed to create a list');
+    }
+  }
+
+  async setStatus(data: TablingSetStatusType): Promise<TablingList> {
+    try {
+      const list = await this.listModel.findByPk(data.id);
+      if (!list) {
+        throw new Error('Waiting list is not found');
+      }
+
+      await list.update({
+        tabling_type: data.tabling_type,
+      });
+
+      return list;
+    } catch (error) {
+      throw error;
     }
   }
 }

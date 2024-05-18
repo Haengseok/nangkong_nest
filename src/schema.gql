@@ -101,6 +101,8 @@ type Mutation {
   tablingCreateShop(input: TablingCreateShop!): TablingShopType!
   tablingShopOpenOrClose(input: TablingShopOpenOrCloseType!): ReturnMessageType!
   tablingCreateList(input: TablingCreateListType!): TablingListType!
+  callWatingCustomer(input: TablingCallListType!): ReturnMessageType!
+  setTablingStatus(input: TablingSetStatusType!): TablingListType!
 }
 
 input CreateUser {
@@ -148,4 +150,13 @@ input TablingCreateListType {
   phone_number: String!
   tabling_type: String!
   personnel: Float!
+}
+
+input TablingCallListType {
+  id: Float!
+}
+
+input TablingSetStatusType {
+  id: ID!
+  tabling_type: String!
 }
