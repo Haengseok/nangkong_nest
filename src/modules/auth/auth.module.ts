@@ -17,28 +17,24 @@ import { TablingUserModule } from 'src/Tabling/TablingUser/tabling-user.module';
 dotenv.config();
 
 @Module({
-    imports: [
-        SequelizeModule.forRoot(config),
-        SequelizeModule.forFeature([
-            Client,
-            AccessToken,
-            RefreshToken,
-        ]),
-        
-        TablingUserModule,
-        UserModule,
-        PassportModule,
-        JwtModule.register({
-            secret: process.env.TOKENSECRETKEY || 'secert',
-            signOptions: { expiresIn: '24h' },
-        }),
-    ],
-    controllers: [AuthController],
-    providers: [
-        AuthService,
-        DtoService,
-        JwtStrategy, // 토큰check 로직
-        AuthResolver,
-    ],
+  imports: [
+    SequelizeModule.forRoot(config),
+    SequelizeModule.forFeature([Client, AccessToken, RefreshToken]),
+
+    TablingUserModule,
+    UserModule,
+    PassportModule,
+    JwtModule.register({
+      secret: process.env.TOKENSECRETKEY || 'secert',
+      signOptions: { expiresIn: '24h' },
+    }),
+  ],
+  controllers: [AuthController],
+  providers: [
+    AuthService,
+    DtoService,
+    JwtStrategy, // 토큰check 로직
+    AuthResolver,
+  ],
 })
-export class AuthModule { }
+export class AuthModule {}

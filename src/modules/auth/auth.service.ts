@@ -1,4 +1,9 @@
-import { HttpException, HttpStatus, Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import { compare, hash } from 'bcrypt';
@@ -12,7 +17,6 @@ import { AccessToken } from './model/access-token.model';
 import { RefreshToken } from './model/refresh-token.model';
 import { RefreshLoginType } from './graphql/refresh-login.type';
 import { TablingUserService } from 'src/Tabling/TablingUser/tabling-user.service';
-
 
 @Injectable()
 export class AuthService {
@@ -29,7 +33,7 @@ export class AuthService {
 
     @InjectModel(RefreshToken)
     private refreshTokenModel: typeof RefreshToken,
-  ) { }
+  ) {}
 
   // 일반 master 로그인
   async login(loginData: LoginType): Promise<AuthPayload> {
@@ -54,11 +58,11 @@ export class AuthService {
     );
 
     // client 추가
-    payload['client_id'] = await this.masterClientFindOrCreate('Tabling Client');
+    payload['client_id'] =
+      await this.masterClientFindOrCreate('Tabling Client');
 
     return await this.generateAccessToken(payload);
   }
-
 
   async refreshLogin(refreshLoginData: RefreshLoginType): Promise<AuthPayload> {
     const refreshToken = await this.refreshTokenModel.findOne({
@@ -77,7 +81,7 @@ export class AuthService {
     const payload = {
       sub: refreshToken.access_token.user_id,
       client_id: refreshToken.access_token.client_id,
-    }
+    };
 
     return await this.generateAccessToken(payload);
   }
@@ -85,7 +89,7 @@ export class AuthService {
   async validateUser(
     project: string,
     username: string,
-    password: string
+    password: string,
   ): Promise<Object> {
     // 어느 프로젝트의 모델인지 정해지지 않아서 any 선언
     var user: any;
@@ -106,22 +110,29 @@ export class AuthService {
   }
 
   // 비밀번호 check
-  async comparePasswords(password: string, hashedPassword: string): Promise<boolean> {
+  async comparePasswords(
+    password: string,
+    hashedPassword: string,
+  ): Promise<boolean> {
     return await compare(password, hashedPassword);
   }
 
   // TODO: 추후 서비스따라 분리구현 필요
   // master client 체크 및 생성
   private async masterClientFindOrCreate(clientName: string): Promise<number> {
-    var client = await this.clientModel.findOne({ where: { name: clientName } })
+    var client = await this.clientModel.findOne({
+      where: { name: clientName },
+    });
     // 없을 때 생성 후 ID return
     if (!client) {
       client = await this.clientModel.create({
         name: clientName,
         password_client: true,
         // 현재날자 + 랜덤 10자로 secret key 생성
-        secret: moment().format('YYYYMMDDHHmmss') + crypto.randomBytes(10).toString('hex'),
-      })
+        secret:
+          moment().format('YYYYMMDDHHmmss') +
+          crypto.randomBytes(10).toString('hex'),
+      });
     }
 
     return client.id;
@@ -130,7 +141,9 @@ export class AuthService {
   // accessToken 생성
   private async generateAccessToken(payload: any) {
     // accessToken 유효성 검사위한 키
-    const secretKey = moment().format('YYYYMMDDHHmmss') + crypto.randomBytes(10).toString('hex');
+    const secretKey =
+      moment().format('YYYYMMDDHHmmss') +
+      crypto.randomBytes(10).toString('hex');
     payload['secret'] = secretKey;
 
     const accessToken = this.jwtService.sign(payload);
@@ -149,7 +162,9 @@ export class AuthService {
     // refreshToken 생성
     const refreshTokenModel = await this.refreshTokenModel.create({
       access_token_id: accessTokenModel.id,
-      refresh_token: moment().format('YYYYMMDDHHmmss') + crypto.randomBytes(32).toString('hex'),
+      refresh_token:
+        moment().format('YYYYMMDDHHmmss') +
+        crypto.randomBytes(32).toString('hex'),
       expired_at: moment().add(2, 'weeks').toDate(), // 2주
     });
 
@@ -191,7 +206,7 @@ export class AuthService {
         user_id: payload.sub,
         client_id: payload.client_id,
         secret: payload.secret,
-      }
+      },
     });
 
     if (!accessToken) {

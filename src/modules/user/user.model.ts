@@ -14,7 +14,7 @@ import {
 })
 export class User extends Model<User> {
   @PrimaryKey
-  @Column({autoIncrement: true})
+  @Column({ autoIncrement: true })
   id: number;
 
   @Column({

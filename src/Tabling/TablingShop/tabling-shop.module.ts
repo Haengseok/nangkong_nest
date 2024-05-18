@@ -7,19 +7,11 @@ import { TablingShopResolver } from './tabling-shop.resolver';
 import { TablingShopOpenClose } from './model/tabling-shop-open-close.module';
 
 @Module({
-    imports: [
-        SequelizeModule.forRoot(config),
-        SequelizeModule.forFeature([
-            TablingShop,
-            TablingShopOpenClose,
-        ]),
-    ],
-    providers: [
-        TablingShopService,
-        TablingShopResolver,
-    ],
-    exports: [
-        TablingShopService,
-    ],
+  imports: [
+    SequelizeModule.forRoot(config),
+    SequelizeModule.forFeature([TablingShop, TablingShopOpenClose]),
+  ],
+  providers: [TablingShopService, TablingShopResolver],
+  exports: [TablingShopService],
 })
-export class TablingShopModule { }
+export class TablingShopModule {}

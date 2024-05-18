@@ -11,7 +11,7 @@ export class UserService {
   constructor(
     @InjectModel(User)
     private readonly userModel: typeof User, // 사용자 모델 주입
-  ) { }
+  ) {}
 
   async getAllUsers(): Promise<User[]> {
     try {
@@ -44,7 +44,10 @@ export class UserService {
     } catch (error) {
       // 고유 제약 조건 위반 오류 처리
       if (error instanceof UniqueConstraintError) {
-        throw new HttpException('Name or email already exists.', HttpStatus.CONFLICT);
+        throw new HttpException(
+          'Name or email already exists.',
+          HttpStatus.CONFLICT,
+        );
       } else {
         throw new Error('Unknown error occurred');
       }

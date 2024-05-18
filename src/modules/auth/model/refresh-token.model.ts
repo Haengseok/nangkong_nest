@@ -1,37 +1,46 @@
-import { Table, Column, Model, ForeignKey, BelongsTo, PrimaryKey, CreatedAt, UpdatedAt } from 'sequelize-typescript';
+import {
+  Table,
+  Column,
+  Model,
+  ForeignKey,
+  BelongsTo,
+  PrimaryKey,
+  CreatedAt,
+  UpdatedAt,
+} from 'sequelize-typescript';
 import { AccessToken } from './access-token.model';
 
 @Table({
-    tableName: 'oauth_refresh_tokens',
-    underscored: true,
+  tableName: 'oauth_refresh_tokens',
+  underscored: true,
 })
 export class RefreshToken extends Model<RefreshToken> {
-    @PrimaryKey
-    @Column({autoIncrement: true})
-    id: number;
+  @PrimaryKey
+  @Column({ autoIncrement: true })
+  id: number;
 
-    @ForeignKey(() => AccessToken)
-    @Column
-    access_token_id: number;
+  @ForeignKey(() => AccessToken)
+  @Column
+  access_token_id: number;
 
-    @BelongsTo(() => AccessToken)
-    access_token: AccessToken;
+  @BelongsTo(() => AccessToken)
+  access_token: AccessToken;
 
-    @Column
-    refresh_token: string;
+  @Column
+  refresh_token: string;
 
-    @Column({
-        allowNull: false,
-        defaultValue: false,
-    })
-    revoked: boolean;
+  @Column({
+    allowNull: false,
+    defaultValue: false,
+  })
+  revoked: boolean;
 
-    @CreatedAt
-    createdAt: Date;
+  @CreatedAt
+  createdAt: Date;
 
-    @UpdatedAt
-    updatedAt: Date;
+  @UpdatedAt
+  updatedAt: Date;
 
-    @Column({allowNull: false})
-    expired_at: Date;
+  @Column({ allowNull: false })
+  expired_at: Date;
 }

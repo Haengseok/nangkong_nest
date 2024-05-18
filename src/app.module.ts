@@ -14,7 +14,7 @@ dotenv.config();
   imports: [
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
-      playground: (process.env.DB_USERNAME !== 'production'),
+      playground: process.env.DB_USERNAME !== 'production',
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
     }),
 
@@ -22,11 +22,7 @@ dotenv.config();
     AuthModule,
     TablingModule,
   ],
-  controllers: [
-    AppController,
-  ],
-  providers: [
-    AppService,
-  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

@@ -6,16 +6,11 @@ import { TablingUserService } from './tabling-user.service';
 import { TablingUserResolver } from './tabling-user.resolver';
 
 @Module({
-    imports: [
-        SequelizeModule.forRoot(config),
-        SequelizeModule.forFeature([TablingUser]),
-    ],
-    providers: [
-        TablingUserService,
-        TablingUserResolver,
-    ],
-    exports: [
-        TablingUserService
-    ],
+  imports: [
+    SequelizeModule.forRoot(config),
+    SequelizeModule.forFeature([TablingUser]),
+  ],
+  providers: [TablingUserService, TablingUserResolver],
+  exports: [TablingUserService],
 })
-export class TablingUserModule { }
+export class TablingUserModule {}

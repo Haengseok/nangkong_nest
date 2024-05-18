@@ -1,8 +1,8 @@
-import { Field, InputType, registerEnumType } from "@nestjs/graphql";
+import { Field, InputType, registerEnumType } from '@nestjs/graphql';
 
 enum ShopStatus {
-  OPEN = "OPEN",
-  CLOSE = "CLOSE",
+  OPEN = 'OPEN',
+  CLOSE = 'CLOSE',
 }
 
 registerEnumType(ShopStatus, {
@@ -11,7 +11,7 @@ registerEnumType(ShopStatus, {
 
 @InputType()
 export class TablingShopOpenOrCloseType {
-  @Field(type => ShopStatus)
+  @Field((type) => ShopStatus)
   status: ShopStatus;
 
   @Field()

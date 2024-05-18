@@ -10,7 +10,7 @@ export class UserController {
   constructor(
     private readonly userService: UserService,
     private readonly dtoService: DtoService,
-  ) { }
+  ) {}
 
   @Get('all')
   @UseGuards(JwtAuthGuard) // TODO: 추후 관리자 인증 붙일 때 변경필요
@@ -21,7 +21,10 @@ export class UserController {
   @Post()
   async createUser(@Body() userData: any): Promise<User> {
     // DTO 변환
-    const createUserDto: CreateUserDto = await this.dtoService.transform(CreateUserDto, userData);
+    const createUserDto: CreateUserDto = await this.dtoService.transform(
+      CreateUserDto,
+      userData,
+    );
 
     // service create 호출
     const createdUser: User = await this.userService.create(createUserDto);

@@ -15,18 +15,18 @@ const isRollback = args.includes('--rollback'); // 롤백옵션
 
 let command = '';
 if (isRollback) {
-    command = `npx sequelize-cli db:migrate:undo --migrations-path=${migrationsPath} --url mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`;
+  command = `npx sequelize-cli db:migrate:undo --migrations-path=${migrationsPath} --url mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`;
 } else {
-    command = `npx sequelize-cli db:migrate --migrations-path=${migrationsPath} --url mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`;
+  command = `npx sequelize-cli db:migrate --migrations-path=${migrationsPath} --url mysql://${dbUser}:${dbPassword}@${dbHost}:${dbPort}/${dbName}`;
 }
 
 exec(command, (error, stdout, stderr) => {
-    if (error) {
-        console.error('Error:', error);
-        console.error('stderr:', stderr);
-        return;
-    }
+  if (error) {
+    console.error('Error:', error);
+    console.error('stderr:', stderr);
+    return;
+  }
 
-    console.log('stdout:', stdout);
-    isRollback ? console.log('롤백 성공!') : console.log('마이그레이션 성공!');
+  console.log('stdout:', stdout);
+  isRollback ? console.log('롤백 성공!') : console.log('마이그레이션 성공!');
 });

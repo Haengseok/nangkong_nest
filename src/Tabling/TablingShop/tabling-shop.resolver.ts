@@ -9,26 +9,30 @@ import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => TablingShopType)
 export class TablingShopResolver {
-    constructor(
-        private readonly shopService: TablingShopService,
-    ) { }
-    
-    @Query(() => TablingShopType)
-    @UseGuards(GqlAuthGuard)
-    async tablingShopFindName(@Args('shop_name') name: string): Promise<TablingShopType> {
-        return await this.shopService.findOne(name);
-    }
+  constructor(private readonly shopService: TablingShopService) {}
 
-    @Mutation(() => TablingShopType)
-    async tablingCreateShop(@Args('input') createData: TablingCreateShop): Promise<TablingShopType> {
-        const createdShop = await this.shopService.create(createData);
-        return createdShop; // 생성된 유저를 반환합니다.
-    }
+  @Query(() => TablingShopType)
+  @UseGuards(GqlAuthGuard)
+  async tablingShopFindName(
+    @Args('shop_name') name: string,
+  ): Promise<TablingShopType> {
+    return await this.shopService.findOne(name);
+  }
 
-    @Mutation(() => ReturnMessageType)
-    @UseGuards(GqlAuthGuard)
-    async tablingShopOpenOrClose(@Args('input') data: TablingShopOpenOrCloseType): Promise<ReturnMessageType> {
-        const message = await this.shopService.openOrClose(data);
-        return message;
-    }
+  @Mutation(() => TablingShopType)
+  async tablingCreateShop(
+    @Args('input') createData: TablingCreateShop,
+  ): Promise<TablingShopType> {
+    const createdShop = await this.shopService.create(createData);
+    return createdShop; // 생성된 유저를 반환합니다.
+  }
+
+  @Mutation(() => ReturnMessageType)
+  @UseGuards(GqlAuthGuard)
+  async tablingShopOpenOrClose(
+    @Args('input') data: TablingShopOpenOrCloseType,
+  ): Promise<ReturnMessageType> {
+    const message = await this.shopService.openOrClose(data);
+    return message;
+  }
 }

@@ -9,11 +9,7 @@ import { TablingListModule } from './TablingList/tabling-list.module';
 dotenv.config();
 
 @Module({
-  imports: [
-    TablingUserModule,
-    TablingShopModule,
-    TablingListModule,
-  ],
-//   providers: [],
+  imports: [TablingUserModule, TablingShopModule, TablingListModule],
+  //   providers: [],
 })
-export class TablingModule { }
+export class TablingModule {}

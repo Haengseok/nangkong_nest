@@ -2,7 +2,6 @@ import { SequelizeModuleOptions } from '@nestjs/sequelize';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
-
 const config: SequelizeModuleOptions = {
   dialect: 'mysql',
   host: process.env.DB_HOST || 'localhost',

@@ -3,15 +3,15 @@ import { MinLength } from 'class-validator';
 
 @InputType()
 export class TablingCreateShop {
-    @Field()
-    shop_name: string;
+  @Field()
+  shop_name: string;
 
-    @Field()
-    address: string;
+  @Field()
+  address: string;
 
-    @Field()
-    detail_address: string;
+  @Field()
+  detail_address: string;
 
-    @Field()
-    phone_number: string;
+  @Field()
+  phone_number: string;
 }

@@ -8,18 +8,12 @@ import { DtoService } from '../dto/dto.service';
 import { UserResolver } from './user.resolver';
 
 @Module({
-    imports: [
-        SequelizeModule.forRoot(config),
-        SequelizeModule.forFeature([User]),
-    ],
-    controllers: [UserController],
-    providers: [
-        UserService,
-        DtoService,
-        UserResolver,
-    ],
-    exports: [
-        UserService,
-    ],
+  imports: [
+    SequelizeModule.forRoot(config),
+    SequelizeModule.forFeature([User]),
+  ],
+  controllers: [UserController],
+  providers: [UserService, DtoService, UserResolver],
+  exports: [UserService],
 })
-export class UserModule { }
+export class UserModule {}
