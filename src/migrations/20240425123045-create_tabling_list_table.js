@@ -23,7 +23,7 @@ module.exports = {
         allowNull: true,
       },
       tabling_type: {
-        type: Sequelize.ENUM('RUN', 'COMPLETE', 'WATING'),
+        type: Sequelize.ENUM('RUN', 'COMPLETE', 'WAITING'),
         allowNull: false,
       },
       personnel: {
