@@ -177,7 +177,7 @@ export class AuthService {
   }
 
   private async revokeToken(clientId: number, userId: number) {
-    // 이전에 발급된 가져오기
+    // 이전에 발급된 토큰 가져오기
     const beforeAccessToken = await this.accessTokenModel.findOne({
       where: {
         client_id: clientId,
